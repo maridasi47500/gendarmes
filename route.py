@@ -2,6 +2,8 @@ from directory import Directory
 from render_figure import RenderFigure
 from user import User
 from news import News
+from remedes import Remedes
+
 from storage import Storage
 from mypic import Pic
 from javascript import Js
@@ -17,6 +19,7 @@ class Route():
         self.mysession={"notice":None,"email":None,"name":None}
         self.dbUsers=User()
         self.dbNews=News()
+        self.dbRemedes=Remedes()
         self.dbStorage=Storage()
         self.render_figure=RenderFigure(self.Program)
         self.getparams=("id",)
@@ -93,6 +96,30 @@ class Route():
         myparam=self.post_data(getparams)
         self.render_figure.set_param("user",User().getbyid(myparam["id"]))
         return self.render_figure.render_figure("welcome/edituser.html")
+    #remedes
+    def newremede(self,search={}):
+        return self.render_figure.render_figure("news/new.html")
+    def createremede(self,params={}):
+        myparams=self.get_post_data()(params=("content",))
+        self.user=self.dbNews.create(myparams)
+        if self.user["news_id"]:
+          self.set_notice(self.user["notice"])
+          self.set_json("{\"redirect\":\"/seemynews/"+self.user["news_id"]+"\"}")
+        else:
+          self.set_json("{\"redirect\":\"/new\"}")
+        return self.render_figure.render_json()
+    def showremede(self,params={}):
+        print("action see my new")
+        getparams=("id",)
+        print("get param, action see my storage",getparams)
+        myparam=self.get_this_route_param(getparams,params)
+        print("m params see my new")
+        print(myparam)
+        self.render_figure.set_param("storage",self.dbStorage.getbyid(myparam["id"]))
+        return self.render_figure.render_figure("data/show.html")
+    def allremedes(self,params={}):
+        self.render_figure.set_param("mystorages",self.dbStorage.getall())
+        return self.render_figure.render_figure("data/all.html")
     def seestorage(self,params={}):
         print("action see my new")
         getparams=("id",)
@@ -171,11 +198,15 @@ class Route():
             self.Program=Pic(path)
         elif path and path.endswith(".css"):
             self.Program=Css(path)
-        elif path and path.endswith(".js"):
+/bin/bash: line 1: :q: command not found
             self.Program=Js(path)
         elif path:
             print("link route ",path)
             ROUTES={
+                    "^/newremede$":self.newremede,
+                    "^/createremede$":self.createremede,
+                    "^/myremede/([0-9]+)$":self.showremede,
+                    "^/allremede$":self.allremedes,
                     "^/datastorage$":self.new_datastorage,
                     "^/new_datastorage$":self.datastorage,
                     "^/allmynews$":self.mynews,
