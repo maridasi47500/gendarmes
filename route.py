@@ -198,7 +198,7 @@ class Route():
             self.Program=Pic(path)
         elif path and path.endswith(".css"):
             self.Program=Css(path)
-/bin/bash: line 1: :q: command not found
+        elif path and path.endswith(".js"):
             self.Program=Js(path)
         elif path:
             print("link route ",path)
