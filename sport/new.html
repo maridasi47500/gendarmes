@@ -1,0 +1,23 @@
+<h1>ecrire 1 breaking news</h1>
+<form action="/createnew" method="post">
+	<input type="hidden" value="<%=session["gender"]%>" name="gender"/>
+	<div class="field">
+		3000m :
+		<span><input type="number" name="minutes" onkeyup="table1()"/> :
+			        <input type="number" name="seconds" min="0" max="59" onkeyup="table1()"/></span>
+	</div>
+	<div class="field">
+			pompe
+			<span><input type="number" name="pompe" min="0" onkeyup="table1();"/>
+				        </span>
+	</div>
+	<div class="field">
+			abdo
+			<span><input type="number" name="abdo" min="0" onkeyup="table1(event);"/>
+				        </span>
+	</div>
+	<div class="action">
+		<input type="submit" value="submit" name="submit"/>
+	</div>
+</form>
+<%=Fichier('./welcome','_montableau.html').lire()%>

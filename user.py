@@ -17,6 +17,10 @@ class User(Model):
         postaladdress string,
         email string,
         profile text,
+        minutes integer,
+        seconds integer,
+        abdo integer,
+        pompe integer,
         zipcode string,
         otheremail string,
         password string not null
@@ -33,9 +37,9 @@ class User(Model):
         print(dict(row))
         print(row)
         if row:
-            return {"notice":"vous êtes connecté","name": row["nomcomplet"],"email": row["otheremail"]}
+            return {"notice":"vous êtes connecté","gender":row["gender"],"name": str(row["nomcomplet"]),"email": row["otheremail"]}
         else:
-            return {"notice":"","name":"","email": ""}
+            return {"notice":"","name":"","email": "","gender":""}
     def getall(self):
         self.cur.execute("select * from users")
         
@@ -74,12 +78,12 @@ class User(Model):
         print("M Y H A S H")
         print(myhash,myhash.keys())
         try:
-          self.cur.execute("insert into users (postaladdress,metier,mypic,nomcomplet,gender, businessaddress, email, profile, zipcode, otheremail, password) values (:postaladdress,:metier,:mypic,:nomcomplet,:gender, :businessaddress, :email, :profile, :zipcode, :otheremail, :password)",myhash)
+          self.cur.execute("insert into users (minutes,seconds,abdo,pompe,postaladdress,metier,mypic,nomcomplet,gender, businessaddress, email, profile, zipcode, otheremail, password) values (:minutes,:seconds,:abdo,:pompe,:postaladdress,:metier,:mypic,:nomcomplet,:gender, :businessaddress, :email, :profile, :zipcode, :otheremail, :password)",myhash)
           self.con.commit()
         except Exception as e:
           print("my error"+str(e))
         
-        self.cur.execute("select id,otheremail,nomcomplet from users where password = ? and otheremail = ?", (myhash["password"], myhash["otheremail"]))
+        self.cur.execute("select id,gender,otheremail,nomcomplet from users where password = ? and otheremail = ?", (myhash["password"], myhash["otheremail"]))
         row=self.cur.fetchone()
         
         myid=row["id"]
@@ -87,7 +91,7 @@ class User(Model):
         print("my row id", myid)
         #print(arr, "my array")
         self.con.commit()
-        return {"notice": "vous avez été inscrit(e)","email": row["otheremail"],"name":row["nomcomplet"]}
+        return {"notice":"vous avez été inscrit(e)","gender":row["gender"],"name": str(row["nomcomplet"]),"email": row["otheremail"]}
 
 
     def update(self,params):
@@ -113,4 +117,4 @@ class User(Model):
         #print(arr, "my array")
         self.cur.execute("select id,otheremail,nomcomplet from users where id = ?", (myid,))
         row=self.cur.fetchone()
-        return {"notice": "vos infos ont été modifiées","email": row["otheremail"],"name":row["nomcomplet"]}
+        return {"notice": "vos infos ont été modifiées","gender":row["gender"],"email": row["otheremail"],"name":row["nomcomplet"]}

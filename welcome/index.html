@@ -39,7 +39,10 @@ name
 </tr>
 <tr>
 <td colspan="2">gender
-<input type="text" name="gender"/>
+<select name="gender" onchange="table1()">
+	<option value="F">F</option>
+	<option value="M">M</option>
+	</select>
 
 </td>
 </tr>
@@ -64,6 +67,27 @@ name
 <tr>
 <td colspan="2">Other Contact Information
 <table>
+<tr>
+<td>
+3000m : 
+<span><input type="number" name="minutes" onkeyup="table1()"/> : 
+	<input type="number" name="seconds" min="0" max="59" onkeyup="table1()"/></span>
+</td>
+</tr>
+<tr>
+<td>
+pompe
+<span><input type="number" name="pompe" min="0" onkeyup="table1();"/>
+	</span>
+</td>
+</tr>
+<tr>
+<td>
+abdo
+<span><input type="number" name="abdo" min="0" onkeyup="table1(event);"/>
+	</span>
+</td>
+</tr>
 <tr>
 <td>
 ZipCode : 
@@ -102,3 +126,5 @@ email :
 </table>
 </table>
 </form>
+
+<%=Fichier('./welcome','_montableau.html').lire()%>

@@ -9,12 +9,8 @@
 
 <a href="/">s'inscrire / se connecter</a>
 <a href="/welcome">voir tous les users</a>
-<a href="/new">ajouter des news</a>
-<a href="/allmynews">voir toutes les news</a>
-<a href="/new_datastorage">ajouter un stockage des donnees</a>
-<a href="/alldatastorage">voir tous les stockage des donnees</a>
-<a href="/newremede">ajouter un remede</a>
-<a href="/allremedes">voir tous les remedes</a>
+<a href="/sport">ajouter un sport</a>
+<a href="/allmysports">voir tous les sports</a>
 <div>
 	<%="<form action=\"/logmeout\" method=\"post\"><input value=\"se deconnecter\" type=\"submit\"/></form>" if session['name'] != "" else ""%>
 
@@ -35,7 +31,6 @@
 	<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<script src="/js/post.js" type="text/javascript"></script>
 	<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-	<script src="/js/mymap.js" type="text/javascript"></script>
 
         </body>
         </html>

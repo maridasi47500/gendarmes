@@ -1,5 +1,6 @@
 import re
 import os
+from fichier import Fichier
 import traceback
 import sys
 class RenderFigure():
@@ -32,12 +33,15 @@ class RenderFigure():
                   continue
               k=j.split("%>")
               print("my session",self.session)
-              loc={"session": self.session,"render_collection": self.render_collection,"params": self.params}
+              loc={"Fichier":Fichier,"session": self.session,"render_collection": self.render_collection,"params": self.params}
               for n in self.params:
                   loc[n]=self.params[n]
 
-              print(k[0])
-              l=exec("myvalue="+k[0], globals(), loc)
+              print(k[0],"my print")
+              try:
+                l=exec("myvalue="+k[0], globals(), loc)
+              except TypeError:
+                l=exec("myvalue=str("+str(k[0])+")", globals(), loc)
 
               mystr+=str(loc["myvalue"]) if loc["myvalue"] is not None else ""
               mystr+=k[1]

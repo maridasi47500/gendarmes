@@ -2,28 +2,32 @@ import sqlite3
 import sys
 import re
 from model import Model
-class News(Model):
+class Sports(Model):
     def __init__(self):
         self.con=sqlite3.connect(self.mydb)
         self.con.row_factory = sqlite3.Row
         self.cur=self.con.cursor()
-        self.cur.execute("""create table if not exists news(
+        self.cur.execute("""create table if not exists sports(
         id integer primary key autoincrement,
-        content text);""")
+        seconds integer,
+        minutes integer,
+        abdo integer,
+        pompe integer
+        );""")
         self.con.commit()
     def getall(self):
-        self.cur.execute("select * from news")
+        self.cur.execute("select * from sports")
         row=self.cur.fetchall()
         return row
     def deletebyid(self,myid):
-        self.cur.execute("delete from news where id = ?",(myid,))
+        self.cur.execute("delete from sports where id = ?",(myid,))
         
 
         job=self.cur.fetchall()
         self.con.commit()
         return None
     def getbyid(self,myid):
-        self.cur.execute("select * from news where id = ?",(myid,))
+        self.cur.execute("select * from sports where id = ?",(myid,))
         
         row=dict(self.cur.fetchone())
         print(row["id"], "row id")
@@ -47,7 +51,7 @@ class News(Model):
         print("CECI EST MON H A SH")
         print(myhash)
         try:
-          self.cur.execute("insert into news (content) values (:content)",myhash)
+          self.cur.execute("insert into sports (seconds,minutes,abdo,pompe) values (:seconds,:minutes,:abdo,:pompe)",myhash)
           self.con.commit()
         except Exception as e:
           print("my error"+str(e))
@@ -59,7 +63,7 @@ class News(Model):
         
 
         print("my row id", myid)
-        return {"notice": "vous avez créé une news","news_id": str(myid)}
+        return {"notice": "vous avez créé une sports","sport_id": str(myid)}
 
 
     def update(self,params):
